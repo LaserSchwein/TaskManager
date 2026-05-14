@@ -5,7 +5,7 @@ class Task
     public int ID{get;}
     public string Name {get;} = "Unknown";
     public ExecutionStatus Status{get; private set;}
-    public string Description{get; } = "Empty";
+    public string Description{get; private set;} = "Empty";
     
     public Task()
     {
@@ -17,6 +17,16 @@ class Task
         Name = name;
         Status = status;
         Description = description;
+    }
+
+    public void UpdateStatus(ExecutionStatus status)
+    {
+        this.Status = status;
+    }
+
+    public void AddOrChangeDesription(string desription)
+    {
+        this.Description = desription;
     }
 
     public override string ToString()
