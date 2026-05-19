@@ -22,6 +22,9 @@
                     WaitUserInput();
                     currentState = AppState.MainMenu;
                     break;
+                case AppState.CreateTask:
+                    CreateTask(repository);
+                    break;
                 case AppState.Exiting:
                     break;
             }
@@ -31,12 +34,16 @@
     public static void ShowMainMenu()
     {
         Console.WriteLine("Нажми \"V\" для появления все задач");
+        Console.WriteLine("Нажми \"B\" для появления меню создания задачи");
         Console.WriteLine("Нажми \"Esc\" для выхода из меню");
         var key = Console.ReadKey(true).Key;
         switch (key)
         {
             case ConsoleKey.V:
                 currentState = AppState.ViewingTask;
+                break;
+            case ConsoleKey.B:
+                currentState = AppState.CreateTask;
                 break;
             case ConsoleKey.Escape:
                 currentState = AppState.Exiting;
@@ -53,5 +60,24 @@
         {
             
         }
+    }
+
+    public static void CreateTask(TasksRepository repository)
+    {
+        Console.WriteLine("Введите название здаача: ");
+        string name = Console.ReadLine();
+        Console.WriteLine("Введите описание(необязательно): ");
+        var key = Console.ReadKey(true).Key;
+        switch (key)
+        {
+            case ConsoleKey.Escape:
+                repository.Add(new Task(10, name, ExecutionStatus.Pending, ""));
+                currentState = AppState.MainMenu;
+                return;
+        }
+        string  description = Console.ReadLine();
+        repository.Add(new Task(10, name, ExecutionStatus.Pending, description));
+        currentState = AppState.MainMenu;
+        return;
     }
 }
