@@ -1,5 +1,5 @@
 using System.Collections;
-class TasksRepository
+class TasksRepository : ITasksRepository
 {
     private List<Task> _repository = [];
     public TasksRepository()

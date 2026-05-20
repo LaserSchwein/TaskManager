@@ -3,11 +3,9 @@
     static AppState currentState = AppState.MainMenu;
     public static void Main(string[] args)
     {
-        TasksRepository repository = new TasksRepository();
-        Task task1 = new Task(3, "bob", ExecutionStatus.Pending, "nothing");
-        Task task2 = new Task(4, "pop", ExecutionStatus.InProgress, "something");
-        repository.Add(task1);
-        repository.Add(task2);
+        ITasksRepository repository = new TasksRepository();
+        repository.Add(new Task(3, "bob", ExecutionStatus.Pending, "nothing"));
+        repository.Add(new Task(4, "pop", ExecutionStatus.InProgress, "something"));
         ConsoleUI ui = new ConsoleUI();
         while(currentState != AppState.Exiting){
             Console.Clear();

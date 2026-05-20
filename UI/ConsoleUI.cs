@@ -19,13 +19,13 @@ class ConsoleUI
         return (name, desription);
     }
 
-        public void WaitUserInput()
+    public void WaitUserInput()
     {
         
         while (true)
         {
             var key = Console.ReadKey(true).Key;
-            if(key != ConsoleKey.Enter)
+            if(key == ConsoleKey.Enter)
                 break;
         }
     }
