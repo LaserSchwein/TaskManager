@@ -17,21 +17,11 @@ class TasksRepository : ITasksRepository
     }
     public bool TryGetTask(int id, out Task taskResult)
     {
-        foreach (var task in _repository)
-        {
-            if (task.ID == id)
-            {
-                taskResult = task;
-                return true;
-            }
-        }
-        taskResult = null;
-        return false;
+        taskResult = _repository.FirstOrDefault(r => r.ID == id);
+        return taskResult != null;
     }
     public Task[] GetAll()
     {
-        Task[] result = new Task[_repository.Count];
-        _repository.ToArray().CopyTo(result);
-        return result;
+        return  _repository.ToArray();
     }
 }
