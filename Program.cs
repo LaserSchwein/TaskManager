@@ -8,76 +8,36 @@
         Task task2 = new Task(4, "pop", ExecutionStatus.InProgress, "something");
         repository.Add(task1);
         repository.Add(task2);
+        ConsoleUI ui = new ConsoleUI();
         while(currentState != AppState.Exiting){
             Console.Clear();
             switch (currentState)
             {
                 case AppState.MainMenu:
-                    ShowMainMenu(); 
+                    var key = ui.ShowMainMenu();
+                    switch (key)
+                    {
+                        case ConsoleKey.B:
+                            currentState = AppState.CreateTask;
+                            break;
+                        case ConsoleKey.V:
+                            currentState = AppState.ViewingTask;
+                            break;
+                    } 
                     break;
                 case AppState.ViewingTask:
-                    foreach (var task in repository.GetAll()){
-                        Console.WriteLine(task);
-                    }
-                    WaitUserInput();
+                    ui.PrintTasks(repository.GetAll());
+                    ui.WaitUserInput();
                     currentState = AppState.MainMenu;
                     break;
                 case AppState.CreateTask:
-                    CreateTask(repository);
+                    var data = ui.GetNewTaskData();
+                    repository.Add(new Task(10, data.name, ExecutionStatus.Pending, data.description));
+                    currentState = AppState.MainMenu;
                     break;
                 case AppState.Exiting:
                     break;
             }
         }
-    }
-
-    public static void ShowMainMenu()
-    {
-        Console.WriteLine("Нажми \"V\" для появления все задач");
-        Console.WriteLine("Нажми \"B\" для появления меню создания задачи");
-        Console.WriteLine("Нажми \"Esc\" для выхода из меню");
-        var key = Console.ReadKey(true).Key;
-        switch (key)
-        {
-            case ConsoleKey.V:
-                currentState = AppState.ViewingTask;
-                break;
-            case ConsoleKey.B:
-                currentState = AppState.CreateTask;
-                break;
-            case ConsoleKey.Escape:
-                currentState = AppState.Exiting;
-                break;
-            default:
-                Console.WriteLine("Неопознаная кнопка");
-                break;
-        }   
-    }
-    public static void WaitUserInput()
-    {
-        var key = Console.ReadKey(true).Key;
-        while (key != ConsoleKey.Enter)
-        {
-            
-        }
-    }
-
-    public static void CreateTask(TasksRepository repository)
-    {
-        Console.WriteLine("Введите название здаача: ");
-        string name = Console.ReadLine();
-        Console.WriteLine("Введите описание(необязательно): ");
-        var key = Console.ReadKey(true).Key;
-        switch (key)
-        {
-            case ConsoleKey.Escape:
-                repository.Add(new Task(10, name, ExecutionStatus.Pending, ""));
-                currentState = AppState.MainMenu;
-                return;
-        }
-        string  description = Console.ReadLine();
-        repository.Add(new Task(10, name, ExecutionStatus.Pending, description));
-        currentState = AppState.MainMenu;
-        return;
     }
 }
