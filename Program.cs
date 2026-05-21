@@ -4,8 +4,8 @@
     public static void Main(string[] args)
     {
         ITasksRepository repository = new TasksRepository();
-        repository.Add(new Task(3, "bob", ExecutionStatus.Pending, "nothing"));
-        repository.Add(new Task(4, "pop", ExecutionStatus.InProgress, "something"));
+        repository.Add("bob", "nothing");
+        repository.Add("pop", "something");
         ConsoleUI ui = new ConsoleUI();
         while(currentState != AppState.Exiting){
             Console.Clear();
@@ -30,7 +30,7 @@
                     break;
                 case AppState.CreateTask:
                     var data = ui.GetNewTaskData();
-                    repository.Add(new Task(10, data.name, ExecutionStatus.Pending, data.description));
+                    repository.Add(data.name, data.description);
                     currentState = AppState.MainMenu;
                     break;
                 case AppState.Exiting:

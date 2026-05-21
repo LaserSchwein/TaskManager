@@ -2,13 +2,15 @@ using System.Collections;
 class TasksRepository : ITasksRepository
 {
     private List<Task> _repository = [];
+    private int _nextId = 0;
     public TasksRepository()
     {
         
     }
-    public void Add(Task task)
+    public void Add(string name, string description)
     {
-        _repository.Add(task);
+        _repository.Add(new Task(_nextId, name, ExecutionStatus.Pending, description));
+        _nextId++;
     }
 
     public void Remove(int id)
