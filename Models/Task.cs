@@ -4,7 +4,7 @@ class Task
 {
     public int ID{get;}
     public string Name {get;} = "Unknown";
-    public ExecutionStatus Status{get; private set;}
+    public ExecutionStatus Status{get; set;}
     public string Description{get; private set;} = "Empty";
     
     public Task()

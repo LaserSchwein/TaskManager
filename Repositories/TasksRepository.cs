@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Net.Http.Headers;
 class TasksRepository : ITasksRepository
 {
     private List<Task> _repository = [];
@@ -25,5 +26,14 @@ class TasksRepository : ITasksRepository
     public Task[] GetAll()
     {
         return  _repository.ToArray();
+    }
+    
+    public void UpdateTaskStatus(int id, ExecutionStatus newStatus)
+    {
+        var task = _repository.FirstOrDefault(r => r.ID == id);
+        if(task != null)
+        {
+            task.Status = newStatus;
+        }
     }
 }

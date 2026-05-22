@@ -4,4 +4,5 @@ interface ITasksRepository
     void Remove(int id);
     bool TryGetTask(int id, out Task result);
     Task[] GetAll();
+    void UpdateTaskStatus(int id, ExecutionStatus newStatus);
 }
